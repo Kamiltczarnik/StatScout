@@ -7,15 +7,15 @@ A web application built with React (frontend) and FastAPI (backend).
 Setup Instructions
 
 1 - Clone the Repository
-git clone https://github.com/Kamiltczarnik/StatScout.git
-cd StatScout
+ - git clone https://github.com/Kamiltczarnik/StatScout.git
+ - cd StatScout
 
 2 - Backend Setup (FastAPI)
  - Set up the virtual environment
      - cd backend
      - python -m venv venv  # Create virtual environment
-     - source venv/bin/activate  # Activate (Mac/Linux)
-     - venv\Scripts\activate  # Activate (Windows)
+     - source venv/bin/activate (Mac/Linux)
+     - venv\Scripts\activate    (Windows)
  - Install dependencies
      - pip install -r requirements.txt
  - Start the FastAPI server
@@ -29,7 +29,7 @@ cd StatScout
      - npm install
  - Start the React app
      - npm run dev
-     
+
      Frontend is now running at: http://localhost:5173
 
 
