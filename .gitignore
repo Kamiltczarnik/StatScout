@@ -1,0 +1,16 @@
+# frontend
+node_modules/
+dist/
+build/
+package-lock.json
+yarn.lock
+
+#  backend
+venv/
+__pycache__/
+*.pyc
+
+
+# env files
+.env
+.env.local
