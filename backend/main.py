@@ -312,13 +312,13 @@ def best_odds_back_to_back_future():
 @app.get("/next-best-odds/today")
 def next_best_odds_today():
     target_date = datetime.today().date()
-    matchups = best_odds_for_date(target_date, lookback_days=3, travel_threshold=100, night_start_hour=18, require_back_to_back=False)
+    matchups = best_odds_for_date(target_date, lookback_days=3, travel_threshold=1000, night_start_hour=18, require_back_to_back=False)
     return JSONResponse(content={"next_best_odds_matchups_today": matchups})
 
 @app.get("/next-best-odds/tomorrow")
 def next_best_odds_tomorrow():
     target_date = datetime.today().date() + timedelta(days=1)
-    matchups = best_odds_for_date(target_date, lookback_days=3, travel_threshold=100, night_start_hour=18, require_back_to_back=False)
+    matchups = best_odds_for_date(target_date, lookback_days=3, travel_threshold=1000, night_start_hour=18, require_back_to_back=False)
     return JSONResponse(content={"next_best_odds_matchups_tomorrow": matchups})
 
 @app.get("/next-best-odds/future")
@@ -327,7 +327,7 @@ def next_best_odds_future():
     combined_matchups = []
     for delta in range(2, 8):  # Day after tomorrow through 7 days from today.
         target_date = today + timedelta(days=delta)
-        matchups = best_odds_for_date(target_date, lookback_days=3, travel_threshold=100, night_start_hour=18, require_back_to_back=False)
+        matchups = best_odds_for_date(target_date, lookback_days=3, travel_threshold=1000, night_start_hour=18, require_back_to_back=False)
         combined_matchups.extend(matchups)
     combined_matchups.sort(key=lambda x: x["away_travel"], reverse=True)
     return JSONResponse(content={"next_best_odds_matchups_future": combined_matchups})
