@@ -4,7 +4,7 @@ export const teamLogos: Record<string, string> = {
     "Coyotes": "https://assets.nhle.com/logos/nhl/svg/CGY_light.svg",
     "Bruins": "https://assets.nhle.com/logos/nhl/svg/BOS_light.svg",
     "Sabres": "https://assets.nhle.com/logos/nhl/svg/BUF_light.svg",
-    "Flames": "https://assets.nhle.com/logos/nhl/svg/FLA_light.svg",
+    "Flames": "https://assets.nhle.com/logos/nhl/svg/CGY_light.svg",
     "Hurricanes": "https://assets.nhle.com/logos/nhl/svg/CAR_light.svg",
     "Blackhawks": "https://assets.nhle.com/logos/nhl/svg/CHI_light.svg",
     "Avalanche": "https://assets.nhle.com/logos/nhl/svg/COL_light.svg",

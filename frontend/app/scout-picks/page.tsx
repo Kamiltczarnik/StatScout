@@ -153,7 +153,7 @@ export default function ScoutPicksPage() {
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  No picks available for today.
+                  No Scout picks available for today.
                 </div>
               )}
             </CardContent>
@@ -190,7 +190,7 @@ export default function ScoutPicksPage() {
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  No picks available for tomorrow.
+                  No Scout picks available for tomorrow.
                 </div>
               )}
             </CardContent>
@@ -222,7 +222,7 @@ export default function ScoutPicksPage() {
                 </div>
               ) : (
                 <div className="text-center py-8 text-muted-foreground">
-                  No picks available for the upcoming week.
+                  No Scout picks available for the upcoming week.
                 </div>
               )}
             </CardContent>
@@ -232,133 +232,172 @@ export default function ScoutPicksPage() {
 
       {/* Next Best Picks Section */}
       <div className="mt-10">
-        <DashboardHeader
-          heading="Next Best Picks"
-          text="Alternate recommendations based on our next best odds analysis."
-        />
-        <Tabs defaultValue="today" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="today">Today's Next Best</TabsTrigger>
-            <TabsTrigger value="tomorrow">Tomorrow's Next Best</TabsTrigger>
-            <TabsTrigger value="future">Upcoming Week</TabsTrigger>
-          </TabsList>
+  <DashboardHeader
+    heading="Next Best Picks"
+    text="Alternate recommendations based on our next best odds analysis."
+  />
+  <Tabs defaultValue="today" className="space-y-4">
+    <TabsList>
+      <TabsTrigger value="today">Today's Next Best</TabsTrigger>
+      <TabsTrigger value="tomorrow">Tomorrow's Next Best</TabsTrigger>
+      <TabsTrigger value="future">Upcoming Week</TabsTrigger>
+    </TabsList>
 
-          <TabsContent value="today" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Today's Next Best Picks</CardTitle>
-                <CardDescription>
-                  {new Date().toLocaleDateString("en-US", {
-                    weekday: "long",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {nextTodayError ? (
-                  <div className="text-center py-8 text-muted-foreground">
-                    Error loading next best picks for today.
-                  </div>
-                ) : nextTodayLoading ? (
-                  <div className="space-y-4">
-                    <Skeleton className="h-[125px] w-full rounded-lg" />
-                    <Skeleton className="h-[125px] w-full rounded-lg" />
-                  </div>
-                ) : nextTodayData.next_best_odds_matchups_today?.length ? (
-                  <div className="space-y-4">
-                    {filterDuplicates(
-                      nextTodayData.next_best_odds_matchups_today,
-                      todayData?.best_odds_matchups_today || []
-                    ).map((game: BestOddsGame) => (
-                      <GamePickCard key={game.game_id} game={game} />
-                    ))}
-                  </div>
-                ) : (
+    {/* TODAY */}
+    <TabsContent value="today" className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Today's Next Best Picks</CardTitle>
+          <CardDescription>
+            {new Date().toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+            })}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {nextTodayError ? (
+            <div className="text-center py-8 text-muted-foreground">
+              Error loading next best picks for today.
+            </div>
+          ) : nextTodayLoading ? (
+            <div className="space-y-4">
+              <Skeleton className="h-[125px] w-full rounded-lg" />
+              <Skeleton className="h-[125px] w-full rounded-lg" />
+            </div>
+          ) : (
+            (() => {
+              // 1. Filter out duplicates
+              const filteredNextToday = filterDuplicates(
+                nextTodayData?.next_best_odds_matchups_today || [],
+                todayData?.best_odds_matchups_today || []
+              )
+
+              // 2. Conditionally render based on the filtered array’s length
+              if (!filteredNextToday.length) {
+                return (
                   <div className="text-center py-8 text-muted-foreground">
                     No next best picks available for today.
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                )
+              }
 
-          <TabsContent value="tomorrow" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Tomorrow's Next Best Picks</CardTitle>
-                <CardDescription>
-                  {new Date(Date.now() + 86400000).toLocaleDateString("en-US", {
-                    weekday: "long",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {nextTomorrowError ? (
-                  <div className="text-center py-8 text-muted-foreground">
-                    Error loading next best picks for tomorrow.
-                  </div>
-                ) : nextTomorrowLoading ? (
-                  <div className="space-y-4">
-                    <Skeleton className="h-[125px] w-full rounded-lg" />
-                    <Skeleton className="h-[125px] w-full rounded-lg" />
-                  </div>
-                ) : nextTomorrowData.next_best_odds_matchups_tomorrow?.length ? (
-                  <div className="space-y-4">
-                    {filterDuplicates(
-                      nextTomorrowData.next_best_odds_matchups_tomorrow,
-                      tomorrowData?.best_odds_matchups_tomorrow || []
-                    ).map((game: BestOddsGame) => (
-                      <GamePickCard key={game.game_id} game={game} />
-                    ))}
-                  </div>
-                ) : (
+              return (
+                <div className="space-y-4">
+                  {filteredNextToday.map((game: BestOddsGame) => (
+                    <GamePickCard key={game.game_id} game={game} />
+                  ))}
+                </div>
+              )
+            })()
+          )}
+        </CardContent>
+      </Card>
+    </TabsContent>
+
+    {/* TOMORROW */}
+    <TabsContent value="tomorrow" className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Tomorrow's Next Best Picks</CardTitle>
+          <CardDescription>
+            {new Date(Date.now() + 86400000).toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+            })}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {nextTomorrowError ? (
+            <div className="text-center py-8 text-muted-foreground">
+              Error loading next best picks for tomorrow.
+            </div>
+          ) : nextTomorrowLoading ? (
+            <div className="space-y-4">
+              <Skeleton className="h-[125px] w-full rounded-lg" />
+              <Skeleton className="h-[125px] w-full rounded-lg" />
+            </div>
+          ) : (
+            (() => {
+              // 1. Filter out duplicates
+              const filteredNextTomorrow = filterDuplicates(
+                nextTomorrowData?.next_best_odds_matchups_tomorrow || [],
+                tomorrowData?.best_odds_matchups_tomorrow || []
+              )
+
+              // 2. Conditionally render based on the filtered array’s length
+              if (!filteredNextTomorrow.length) {
+                return (
                   <div className="text-center py-8 text-muted-foreground">
                     No next best picks available for tomorrow.
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                )
+              }
 
-          <TabsContent value="future" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Upcoming Week's Next Best Picks</CardTitle>
-                <CardDescription>Next best picks for the next 7 days</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {nextFutureError ? (
-                  <div className="text-center py-8 text-muted-foreground">
-                    Error loading next best picks for the upcoming week.
-                  </div>
-                ) : nextFutureLoading ? (
-                  <div className="space-y-4">
-                    <Skeleton className="h-[125px] w-full rounded-lg" />
-                    <Skeleton className="h-[125px] w-full rounded-lg" />
-                    <Skeleton className="h-[125px] w-full rounded-lg" />
-                  </div>
-                ) : nextFutureData.next_best_odds_matchups_future?.length ? (
-                  <div className="space-y-4">
-                    {filterDuplicates(
-                      nextFutureData.next_best_odds_matchups_future,
-                      futureData?.best_odds_matchups_future || []
-                    ).map((game: BestOddsGame) => (
-                      <GamePickCard key={game.game_id} game={game} />
-                    ))}
-                  </div>
-                ) : (
+              return (
+                <div className="space-y-4">
+                  {filteredNextTomorrow.map((game: BestOddsGame) => (
+                    <GamePickCard key={game.game_id} game={game} />
+                  ))}
+                </div>
+              )
+            })()
+          )}
+        </CardContent>
+      </Card>
+    </TabsContent>
+
+    {/* UPCOMING WEEK */}
+    <TabsContent value="future" className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Upcoming Week's Next Best Picks</CardTitle>
+          <CardDescription>Next best picks for the next 7 days</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {nextFutureError ? (
+            <div className="text-center py-8 text-muted-foreground">
+              Error loading next best picks for the upcoming week.
+            </div>
+          ) : nextFutureLoading ? (
+            <div className="space-y-4">
+              <Skeleton className="h-[125px] w-full rounded-lg" />
+              <Skeleton className="h-[125px] w-full rounded-lg" />
+              <Skeleton className="h-[125px] w-full rounded-lg" />
+            </div>
+          ) : (
+            (() => {
+              // 1. Filter out duplicates
+              const filteredNextFuture = filterDuplicates(
+                nextFutureData?.next_best_odds_matchups_future || [],
+                futureData?.best_odds_matchups_future || []
+              )
+
+              // 2. Conditionally render based on the filtered array’s length
+              if (!filteredNextFuture.length) {
+                return (
                   <div className="text-center py-8 text-muted-foreground">
                     No next best picks available for the upcoming week.
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
+                )
+              }
+
+              return (
+                <div className="space-y-4">
+                  {filteredNextFuture.map((game: BestOddsGame) => (
+                    <GamePickCard key={game.game_id} game={game} />
+                  ))}
+                </div>
+              )
+            })()
+          )}
+        </CardContent>
+      </Card>
+    </TabsContent>
+  </Tabs>
+</div>
     </DashboardShell>
   )
 }
@@ -420,8 +459,8 @@ function GamePickCard({ game }: { game: BestOddsGame }) {
 }
 
 function formatCentralDate(dateString: string) {
-  // Parse the date as if it's intended for Central (assume the string is "YYYY-MM-DD")
-  const date = new Date(dateString + "T00:00:00")
+  const [year, month, day] = dateString.split("-").map(Number)
+  const date = new Date(Date.UTC(year, month - 1, day, 12))
   return date.toLocaleDateString("en-US", {
     timeZone: "America/Chicago",
     weekday: "short",
