@@ -1,5 +1,5 @@
-#  StatScout  🏀
-Your go-to scouting tool for NBA stats and trends. StatScout helps you identify profitable betting opportunities by analyzing historical data and predictive analytics.  
+#  StatScout  🏒
+Your go-to scouting tool for NHL stats and trends. StatScout helps you identify profitable betting opportunities by analyzing historical data and predictive analytics.  
 
 ## Full-Stack React + FastAPI App  
 A web application built with React (frontend) and FastAPI (backend).  
