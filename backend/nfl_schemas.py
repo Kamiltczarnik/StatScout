@@ -146,4 +146,10 @@ class NflStandingsResponse(BaseModel):
     standings: List[NflStandingTeam]
 
     class Config:
+        from_attributes = True
+
+class NflScheduleResponse(BaseModel):
+    games: List[NflGame]
+
+    class Config:
         from_attributes = True 

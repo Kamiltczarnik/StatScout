@@ -74,16 +74,16 @@ def get_nfl_teams(db: Session, season: str = "2024"):
 
     return query.all()
 
-def get_nfl_schedule(db: Session, date: str = None, upcoming: bool = False, season: str = "2024-2025"):
+def get_nfl_schedule(db: Session, date: str = None, upcoming: bool = False, season: str = "2024"):
     query = db.query(nfl_models.NflGame)
     if date:
         query = query.filter(nfl_models.NflGame.game_date == date)
     elif upcoming:
-        today = datetime.now().strftime("%Y-%m-%d")
-        seven_days_later = (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d")
-        query = query.filter(nfl_models.NflGame.game_date >= today,
-                               nfl_models.NflGame.game_date <= seven_days_later,
-                               nfl_models.NflGame.season == "2025-2026") # Future season for upcoming games
+        # Return all games from week 1 of the upcoming season (season = '2025')
+        query = query.filter(
+            nfl_models.NflGame.season == "2025",
+            nfl_models.NflGame.week == "1"
+        )
     else:
         # Default to today's games for the specified season if no date or upcoming flag
         today = datetime.now().strftime("%Y-%m-%d")

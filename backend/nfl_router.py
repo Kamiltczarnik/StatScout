@@ -26,23 +26,23 @@ def read_nfl_teams(db: Session = Depends(get_db)):
     ]
     return {"teams": result}
 
-@router.get("/nfl/schedule", response_model=List[nfl_schemas.NflGame])
+@router.get("/nfl/schedule", response_model=nfl_schemas.NflScheduleResponse)
 def read_nfl_schedule(
     date: Optional[str] = Query(None, description="Date in YYYY-MM-DD format. If not provided, returns today's schedule for the current season or upcoming if specified"),
-    upcoming: bool = Query(False, description="If true, returns games from tomorrow and beyond for the next 7 days for the 2025-2026 season"),
-    season: str = Query("2024-2025", description="Season in YYYY-YYYY format. Defaults to 2024-2025. Used if date and upcoming are not specified, or with date if provided."),
+    upcoming: bool = Query(False, description="If true, returns all games from week 1 of the 2025 season (upcoming)"),
+    season: str = Query("2024", description="Season as a 4-digit year string. Defaults to 2024. Used if date and upcoming are not specified, or with date if provided."),
     db: Session = Depends(get_db)
 ):
     # Adjust logic to prioritize 'upcoming' for its specific season, then 'date', then default to 'season' for today.
     if upcoming:
-        # Upcoming always uses 2025-2026 as per user request
-        schedule = nfl_crud.get_nfl_schedule(db, upcoming=True, season="2025-2026")
+        # Upcoming always uses 2025 as per user request
+        schedule = nfl_crud.get_nfl_schedule(db, upcoming=True, season="2025")
     elif date:
         schedule = nfl_crud.get_nfl_schedule(db, date=date, season=season) # Use provided season with date
     else:
         # Defaults to today for the specified/default season
         schedule = nfl_crud.get_nfl_schedule(db, season=season)
-    return schedule
+    return {"games": schedule}
 
 @router.get("/nfl/players", response_model=List[nfl_schemas.NflPlayer])
 def read_nfl_players(

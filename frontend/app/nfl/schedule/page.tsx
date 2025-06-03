@@ -110,12 +110,12 @@ export default function NflSchedulePage() {
           </CardContent>
         </Card>
 
-        {/* Upcoming Games Card (Next 7 Days - 2025-2026 Season) */}
+        {/* Upcoming Games Card (Week 1 - 2025 Season) */}
         <Card>
           <CardHeader>
-            <CardTitle>Upcoming Games (Next 7 Days)</CardTitle>
+            <CardTitle>Upcoming Games (Week 1 - 2025 Season)</CardTitle>
             <CardDescription>
-              Showing games for the 2025-2026 NFL season.
+              Showing all games from week 1 of the 2025 NFL season.
             </CardDescription>
           </CardHeader>
           <CardContent>

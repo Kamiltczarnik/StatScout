@@ -56,17 +56,14 @@ export function NflGameSchedule({
   let apiUrl = "http://localhost:8000/nfl/schedule";
 
   if (upcoming) {
-    // User story: "for the future schedule use the 2025-2026 season data"
-    queryParams = "?upcoming=true&season=2025-2026";
+    // For the future schedule, use the first week of the 2025 season (not next 7 days)
+    queryParams = "?upcoming=true&season=2025";
   } else if (selectedDate) {
-    // User story: "Base it all off the 2024-2025 NFL season which is in the database"
-    queryParams = `?date=${format(
-      selectedDate,
-      "yyyy-MM-dd"
-    )}&season=2024-2025`;
+    // Use the 2024 season for current schedule
+    queryParams = `?date=${format(selectedDate, "yyyy-MM-dd")}&season=2024`;
   } else {
-    // Default to today for 2024-2025 season if no specific date or upcoming flag
-    queryParams = `?season=2024-2025`;
+    // Default to today for 2024 season if no specific date or upcoming flag
+    queryParams = `?season=2024`;
   }
 
   const url = `${apiUrl}${queryParams}`;
