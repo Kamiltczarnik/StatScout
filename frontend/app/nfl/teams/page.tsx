@@ -16,6 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { NflTeamCard } from "@/components/NflTeamCard"; // Changed to NflTeamCard
 import { NflTeamStandings } from "@/components/NflTeamStandings"; // Changed to NflTeamStandings
 import { nflTeamLogos } from "@/app/nfl/nfl_team_logos";
+import { NflDashboardShell } from "@/components/nfl-dashboard-shell";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -136,7 +137,7 @@ export default function NflTeamsPage() {
   }
 
   return (
-    <DashboardShell>
+    <NflDashboardShell>
       <DashboardHeader
         heading="NFL Teams"
         text="View all NFL teams, standings, and statistics."
@@ -279,6 +280,6 @@ export default function NflTeamsPage() {
           ))}
         </Tabs>
       )}
-    </DashboardShell>
+    </NflDashboardShell>
   );
 }

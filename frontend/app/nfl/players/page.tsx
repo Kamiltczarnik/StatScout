@@ -16,6 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState, useMemo } from "react";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { NflDashboardShell } from "@/components/nfl-dashboard-shell";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -169,10 +170,10 @@ export default function NflPlayersPage() {
   }
 
   return (
-    <DashboardShell>
+    <NflDashboardShell>
       <DashboardHeader
         heading="NFL Players"
-        text="Browse top NFL players by category."
+        text="View all NFL players and their stats."
       />
       <Tabs defaultValue={playerCategories[0].value} className="space-y-4">
         <TabsList className="overflow-x-auto whitespace-nowrap">
@@ -208,6 +209,6 @@ export default function NflPlayersPage() {
           </TabsContent>
         ))}
       </Tabs>
-    </DashboardShell>
+    </NflDashboardShell>
   );
 }

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { format, isSameDay, addDays, subDays } from "date-fns";
+import { NflDashboardShell } from "@/components/nfl-dashboard-shell";
 
 export default function NflSchedulePage() {
   const today = new Date();
@@ -38,7 +39,7 @@ export default function NflSchedulePage() {
   };
 
   return (
-    <DashboardShell>
+    <NflDashboardShell>
       <DashboardHeader
         heading="NFL Schedule"
         text="View upcoming and past NFL games for the 2024-2025 season (current) and 2025-2026 season (upcoming)."
@@ -122,6 +123,6 @@ export default function NflSchedulePage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardShell>
+    </NflDashboardShell>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { DashboardHeader } from "@/components/dashboard-header";
-import { DashboardShell } from "@/components/dashboard-shell";
+import { NflDashboardShell } from "@/components/nfl-dashboard-shell";
 import {
   Card,
   CardContent,
@@ -13,10 +13,10 @@ import { AlertTriangle } from "lucide-react";
 
 export default function NflScoutPicksPage() {
   return (
-    <DashboardShell>
+    <NflDashboardShell>
       <DashboardHeader
         heading="NFL Scout Picks"
-        text="Data-driven NFL game insights and betting opportunities (Under Construction)."
+        text="Data-driven game predictions for NFL."
       />
       <div className="grid gap-6">
         <Card>
@@ -38,6 +38,6 @@ export default function NflScoutPicksPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardShell>
+    </NflDashboardShell>
   );
 }
