@@ -43,6 +43,14 @@ export function PlayerStats() {
   // Use optional chaining and default to an empty array.
   const players = data?.players ?? []
 
+  if (players.length === 0) {
+    return (
+      <p className="text-center text-muted-foreground py-4">
+        No player stats available.
+      </p>
+    )
+  }
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -58,8 +66,8 @@ export function PlayerStats() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {players.map((player: any) => (
-            <TableRow key={player.name}>
+          {players.map((player: any, index: number) => (
+            <TableRow key={player.name || index}>
               <TableCell className="font-medium">{player.name}</TableCell>
               <TableCell>{player.team}</TableCell>
               <TableCell className="text-center">{player.gp}</TableCell>

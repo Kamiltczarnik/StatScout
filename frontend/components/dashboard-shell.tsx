@@ -1,5 +1,5 @@
 import type React from "react"
-import { DashboardNav } from "@/components/dashboard-nav"
+import { DashboardNav } from "@/components/nhl-dashboard-nav"
 
 interface DashboardShellProps {
   children: React.ReactNode

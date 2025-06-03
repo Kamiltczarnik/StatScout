@@ -14,11 +14,17 @@ interface PlayerCardProps {
     g?: number
     a?: number
     pts?: number
+    ppg?: number  // Points per game
+    gwg?: number  // Game-winning goals
     w?: number
     l?: number
+    otl?: number  // Overtime losses
     sv?: number
+    gaa?: number  // Goals against average
+    so?: number   // Shutouts
   }
   isGoalie?: boolean
+  showExtraStats?: boolean // Whether to show additional stats like PPG or GWG
 }
 
 export function PlayerCard({
@@ -29,6 +35,7 @@ export function PlayerCard({
   number = "",
   stats,
   isGoalie = false,
+  showExtraStats = false,
 }: PlayerCardProps) {
   return (
     <Card className="overflow-hidden">
@@ -51,6 +58,7 @@ export function PlayerCard({
         </p>
         <div className="grid grid-cols-4 gap-2 text-sm">
           {isGoalie ? (
+            // Goalie stats
             <>
               <div className="text-center">
                 <div className="font-medium">{stats.gp ?? 0}</div>
@@ -68,8 +76,25 @@ export function PlayerCard({
                 <div className="font-medium">{stats.sv ?? 0}</div>
                 <div className="text-xs text-muted-foreground">SV%</div>
               </div>
+              {showExtraStats && (
+                <>
+                  <div className="text-center">
+                    <div className="font-medium">{stats.otl ?? 0}</div>
+                    <div className="text-xs text-muted-foreground">OTL</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-medium">{stats.gaa ?? 0}</div>
+                    <div className="text-xs text-muted-foreground">GAA</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-medium">{stats.so ?? 0}</div>
+                    <div className="text-xs text-muted-foreground">SO</div>
+                  </div>
+                </>
+              )}
             </>
           ) : (
+            // Skater stats
             <>
               <div className="text-center">
                 <div className="font-medium">{stats.gp ?? 0}</div>
@@ -87,6 +112,18 @@ export function PlayerCard({
                 <div className="font-medium">{stats.pts ?? 0}</div>
                 <div className="text-xs text-muted-foreground">PTS</div>
               </div>
+              {showExtraStats && stats.ppg !== undefined && (
+                <div className="text-center">
+                  <div className="font-medium">{stats.ppg}</div>
+                  <div className="text-xs text-muted-foreground">PPG</div>
+                </div>
+              )}
+              {showExtraStats && stats.gwg !== undefined && (
+                <div className="text-center">
+                  <div className="font-medium">{stats.gwg}</div>
+                  <div className="text-xs text-muted-foreground">GWG</div>
+                </div>
+              )}
             </>
           )}
         </div>
