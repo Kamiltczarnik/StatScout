@@ -236,30 +236,29 @@ export default function NflTeamsPage() {
                           team.division?.toUpperCase() ===
                             divisionGroup.divisionShort?.toUpperCase()
                       )
-                      .map((team: ApiNflTeam) => {
-                        const teamStanding = standingsMap.get(team.team_id);
-                        return (
-                          <NflTeamCard
-                            key={team.team_id}
-                            name={team.name}
-                            logo={
-                              nflTeamLogos[team.abbreviation] ||
-                              "/assets/logos/nfl/placeholder.png"
-                            }
-                            conference={team.conference}
-                            division={team.division}
-                            record={
-                              teamStanding
-                                ? {
-                                    wins: teamStanding.total_wins,
-                                    losses: teamStanding.total_losses,
-                                    ties: teamStanding.total_ties,
-                                  }
-                                : undefined
-                            }
-                          />
-                        );
-                      })}
+                      .map((team: ApiNflTeam) => (
+                        <NflTeamCard
+                          key={team.team_id}
+                          name={team.name}
+                          logo={
+                            nflTeamLogos[team.abbreviation] ||
+                            "/assets/logos/nfl/placeholder.png"
+                          }
+                          conference={team.conference}
+                          division={team.division}
+                          record={
+                            team.wins !== undefined &&
+                            team.losses !== undefined &&
+                            team.ties !== undefined
+                              ? {
+                                  wins: team.wins,
+                                  losses: team.losses,
+                                  ties: team.ties,
+                                }
+                              : undefined
+                          }
+                        />
+                      ))}
                   </div>
                 </CardContent>
               </Card>
