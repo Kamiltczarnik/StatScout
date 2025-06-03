@@ -1,4 +1,10 @@
 fastapi
 uvicorn[standard]
-nhl-api-py
+nhlpy
+sbrscrape
+httpx
 matplotlib
+SQLAlchemy
+psycopg2-binary
+python-dotenv
+requests

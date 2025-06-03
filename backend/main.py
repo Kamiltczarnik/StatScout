@@ -18,16 +18,21 @@ import random
 import httpx
 from pydantic import BaseModel
 
+from nfl_router import router as nfl_api_router # Import the NFL router
+
 app = FastAPI()
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Update with your frontend's URL
+    allow_origins=["http://localhost:3000", "http://localhost:5173"],  # Update with your frontend's URL, added 5173 for React dev
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(nfl_api_router) # Include the NFL router in the FastAPI app
+
 def get_games_with_travel_for_date(game_date, lookback_days=3):
     """
     Returns a list of matchups for a given game_date.
