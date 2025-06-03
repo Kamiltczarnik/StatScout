@@ -8,8 +8,23 @@ router = APIRouter()
 
 @router.get("/nfl/teams")
 def read_nfl_teams(db: Session = Depends(get_db)):
-    teams = nfl_crud.get_nfl_teams(db)
-    return {"teams": teams}
+    teams = nfl_crud.get_nfl_teams(db, season="2024")
+    # Return all team info plus record fields
+    result = [
+        {
+            "team_id": t.team_id,
+            "name": t.name,
+            "abbreviation": t.abbreviation,
+            "city": t.city,
+            "conference": t.conference,
+            "division": t.division,
+            "wins": t.wins,
+            "losses": t.losses,
+            "ties": t.ties,
+        }
+        for t in teams
+    ]
+    return {"teams": result}
 
 @router.get("/nfl/schedule", response_model=List[nfl_schemas.NflGame])
 def read_nfl_schedule(

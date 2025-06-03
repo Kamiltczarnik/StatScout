@@ -96,6 +96,9 @@ interface ApiNflTeam {
   conference: string; // e.g., "AFC", "NFC"
   division: string; // e.g., "East", "North"
   // Logo might be derived or constructed, not directly from this API structure typically
+  wins?: number;
+  losses?: number;
+  ties?: number;
 }
 
 interface ApiNflStandingTeam {
@@ -184,30 +187,29 @@ export default function NflTeamsPage() {
           {/* All Teams Tab */}
           <TabsContent value="all" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {teams?.map((team: ApiNflTeam) => {
-                const teamStanding = standingsMap.get(team.team_id);
-                return (
-                  <NflTeamCard
-                    key={team.team_id}
-                    name={team.name}
-                    logo={
-                      nflTeamLogos[team.abbreviation] ||
-                      "/assets/logos/nfl/placeholder.png"
-                    }
-                    conference={team.conference}
-                    division={team.division}
-                    record={
-                      teamStanding
-                        ? {
-                            wins: teamStanding.total_wins,
-                            losses: teamStanding.total_losses,
-                            ties: teamStanding.total_ties,
-                          }
-                        : undefined
-                    }
-                  />
-                );
-              })}
+              {teams?.map((team: ApiNflTeam) => (
+                <NflTeamCard
+                  key={team.team_id}
+                  name={team.name}
+                  logo={
+                    nflTeamLogos[team.abbreviation] ||
+                    "/assets/logos/nfl/placeholder.png"
+                  }
+                  conference={team.conference}
+                  division={team.division}
+                  record={
+                    team.wins !== undefined &&
+                    team.losses !== undefined &&
+                    team.ties !== undefined
+                      ? {
+                          wins: team.wins,
+                          losses: team.losses,
+                          ties: team.ties,
+                        }
+                      : undefined
+                  }
+                />
+              ))}
             </div>
           </TabsContent>
 

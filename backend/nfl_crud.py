@@ -1,10 +1,78 @@
 from sqlalchemy.orm import Session
 import nfl_models
-from sqlalchemy import func, case
+from sqlalchemy import func, case, or_, and_
 from datetime import datetime, timedelta
 
-def get_nfl_teams(db: Session):
-    return db.query(nfl_models.NflTeam).all()
+def get_nfl_teams(db: Session, season: str = "2024"):
+    games = nfl_models.NflGame
+    teams = nfl_models.NflTeam
+
+    query = (
+        db.query(
+            teams.team_id,
+            teams.name,
+            teams.abbreviation,
+            teams.city,
+            teams.conference,
+            teams.division,
+            func.coalesce(
+                func.sum(
+                    case(
+                        (and_(teams.abbreviation == games.home_team_abbr, games.home_team_score > games.away_team_score, games.home_team_score != None, games.away_team_score != None, games.status == 'REG'), 1),
+                        (and_(teams.abbreviation == games.away_team_abbr, games.away_team_score > games.home_team_score, games.home_team_score != None, games.away_team_score != None, games.status == 'REG'), 1),
+                        else_=0,
+                    )
+                ),
+                0,
+            ).label("wins"),
+            func.coalesce(
+                func.sum(
+                    case(
+                        (and_(teams.abbreviation == games.home_team_abbr, games.home_team_score < games.away_team_score, games.home_team_score != None, games.away_team_score != None, games.status == 'REG'), 1),
+                        (and_(teams.abbreviation == games.away_team_abbr, games.away_team_score < games.home_team_score, games.home_team_score != None, games.away_team_score != None, games.status == 'REG'), 1),
+                        else_=0,
+                    )
+                ),
+                0,
+            ).label("losses"),
+            func.coalesce(
+                func.sum(
+                    case(
+                        (
+                            or_(
+                                teams.abbreviation == games.home_team_abbr,
+                                teams.abbreviation == games.away_team_abbr,
+                            ),
+                            case((games.home_team_score == games.away_team_score, 1), else_=0),
+                        ),
+                        else_=0,
+                    )
+                ),
+                0,
+            ).label("ties"),
+        )
+        .outerjoin(
+            games,
+            and_(
+                or_(
+                    teams.abbreviation == games.home_team_abbr,
+                    teams.abbreviation == games.away_team_abbr,
+                ),
+                games.season == season
+            ),
+        )
+        .group_by(
+            teams.team_id,
+            teams.name,
+            teams.abbreviation,
+            teams.city,
+            teams.conference,
+            teams.division,
+        )
+        .order_by(teams.conference, teams.division)
+    )
+
+    return query.all()
 
 def get_nfl_schedule(db: Session, date: str = None, upcoming: bool = False, season: str = "2024-2025"):
     query = db.query(nfl_models.NflGame)
