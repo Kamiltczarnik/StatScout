@@ -90,7 +90,7 @@ def get_nfl_schedule(db: Session, date: str = None, upcoming: bool = False, seas
         query = query.filter(nfl_models.NflGame.game_date == today, nfl_models.NflGame.season == season)
     return query.order_by(nfl_models.NflGame.game_date).all()
 
-def get_nfl_player_stats(db: Session, season: str = "2024-2025"):
+def get_nfl_player_stats(db: Session, season: str = "2024"):
     return (
         db.query(nfl_models.NflPlayerGameStats)
         .join(nfl_models.NflGame, nfl_models.NflPlayerGameStats.game_id == nfl_models.NflGame.game_id)
@@ -98,7 +98,7 @@ def get_nfl_player_stats(db: Session, season: str = "2024-2025"):
         .all()
     )
 
-def get_nfl_players(db: Session, season: str = "2024-2025"):
+def get_nfl_players(db: Session, season: str = "2024"):
     # This function might need adjustment based on how you associate players with a season
     # Assuming all players in nfl_players table are relevant or you have a season field in nfl_players
     return db.query(nfl_models.NflPlayer).all()
@@ -137,7 +137,7 @@ def get_nfl_player_details(db: Session, player_id: str):
             func.count(nfl_models.NflPlayerGameStats.game_id).label("games_played")
         )
         .filter(nfl_models.NflPlayerGameStats.player_id == player_id)
-        .filter(nfl_models.NflGame.season == "2024-2025") # Assuming current season stats
+        .filter(nfl_models.NflGame.season == "2024") # Assuming current season stats
         .join(nfl_models.NflGame, nfl_models.NflPlayerGameStats.game_id == nfl_models.NflGame.game_id)
         .first()
     )
@@ -146,7 +146,7 @@ def get_nfl_player_details(db: Session, player_id: str):
         db.query(nfl_models.NflPlayerGameStats, nfl_models.NflGame)
         .join(nfl_models.NflGame, nfl_models.NflPlayerGameStats.game_id == nfl_models.NflGame.game_id)
         .filter(nfl_models.NflPlayerGameStats.player_id == player_id)
-        .filter(nfl_models.NflGame.season == "2024-2025") # Current season game log
+        .filter(nfl_models.NflGame.season == "2024") # Current season game log
         .order_by(nfl_models.NflGame.game_date.desc())
         .all()
     )
@@ -154,7 +154,7 @@ def get_nfl_player_details(db: Session, player_id: str):
     return {"player": player, "stats": stats, "game_log": game_log}
 
 
-def get_nfl_standings(db: Session, season: str = "2024-2025"):
+def get_nfl_standings(db: Session, season: str = "2024"):
     # Calculate wins, losses, ties, points_for, points_against
     # This query is a bit complex, might need adjustments based on exact schema and needs
 
