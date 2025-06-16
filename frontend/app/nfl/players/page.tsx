@@ -27,8 +27,21 @@ interface NflApiPlayer {
   position: string;
   jersey: string; // Jersey number as string
   headshot_url?: string;
-  // Stats will be nested under a stats object from the API for leaders
-  stats: NflPlayerStats;
+  stats?: NflPlayerStats;
+}
+
+interface PassingLeader {
+  player: NflApiPlayer;
+  total_passing_yards: number;
+  total_passing_tds: number;
+  total_attempts: number;
+  total_completions: number;
+  total_interceptions: number;
+  games_played: number;
+}
+
+interface PassingLeadersResponse {
+  leaders: PassingLeader[];
 }
 
 interface NflPlayerCategory {
@@ -95,17 +108,43 @@ const PlayerList: React.FC<{ category: NflPlayerCategory }> = ({
   });
 
   useEffect(() => {
-    if (apiResponse?.players && !shouldUseCache) {
+    if (apiResponse?.leaders && !shouldUseCache) {
       categoryCache[category.value] = {
-        data: apiResponse.players,
+        data: apiResponse.leaders.map((leader: PassingLeader) => ({
+          ...leader.player,
+          stats: {
+            passing_yards: leader.total_passing_yards,
+            passing_tds: leader.total_passing_tds,
+            attempts: leader.total_attempts,
+            completions: leader.total_completions,
+            interceptions: leader.total_interceptions,
+            games_played: leader.games_played,
+          },
+        })),
         timestamp: Date.now(),
       };
     }
   }, [apiResponse, category.value, shouldUseCache]);
 
   const players: NflApiPlayer[] = useMemo(() => {
-    return shouldUseCache ? cachedEntry.data : apiResponse?.players || [];
-  }, [shouldUseCache, cachedEntry, apiResponse?.players]);
+    if (shouldUseCache) {
+      return cachedEntry.data;
+    }
+    if (apiResponse?.leaders) {
+      return apiResponse.leaders.map((leader: PassingLeader) => ({
+        ...leader.player,
+        stats: {
+          passing_yards: leader.total_passing_yards,
+          passing_tds: leader.total_passing_tds,
+          attempts: leader.total_attempts,
+          completions: leader.total_completions,
+          interceptions: leader.total_interceptions,
+          games_played: leader.games_played,
+        },
+      }));
+    }
+    return [];
+  }, [shouldUseCache, cachedEntry, apiResponse?.leaders]);
 
   if (error) {
     return (

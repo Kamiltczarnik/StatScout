@@ -212,4 +212,25 @@ def get_nfl_standings(db: Session, season: str = "2024"):
         )
     )
 
-    return query.all() 
+    return query.all()
+
+def get_nfl_passing_leaders(db: Session, season: str = "2024"):
+    return (
+        db.query(
+            nfl_models.NflPlayer,
+            func.sum(nfl_models.NflPlayerGameStats.passing_yards).label("total_passing_yards"),
+            func.sum(nfl_models.NflPlayerGameStats.passing_tds).label("total_passing_tds"),
+            func.sum(nfl_models.NflPlayerGameStats.attempts).label("total_attempts"),
+            func.sum(nfl_models.NflPlayerGameStats.completions).label("total_completions"),
+            func.sum(nfl_models.NflPlayerGameStats.interceptions).label("total_interceptions"),
+            func.count(nfl_models.NflPlayerGameStats.game_id).label("games_played")
+        )
+        .join(nfl_models.NflPlayerGameStats, nfl_models.NflPlayer.player_id == nfl_models.NflPlayerGameStats.player_id)
+        .join(nfl_models.NflGame, nfl_models.NflPlayerGameStats.game_id == nfl_models.NflGame.game_id)
+        .filter(nfl_models.NflGame.season == season)
+        .group_by(nfl_models.NflPlayer.player_id)
+        .having(func.sum(nfl_models.NflPlayerGameStats.attempts) >= 100)  # Minimum 100 attempts to qualify
+        .order_by(func.sum(nfl_models.NflPlayerGameStats.passing_yards).desc())
+        .limit(50)
+        .all()
+    ) 

@@ -105,4 +105,24 @@ def read_nfl_standings(
 def nfl_scout_picks():
     # This is a placeholder as requested.
     # You can implement logic here later based on your NFL scouting criteria.
-    return {"message": "NFL Scout Picks page is under construction."} 
+    return {"message": "NFL Scout Picks page is under construction."}
+
+@router.get("/nfl/players/leaders/passing", response_model=nfl_schemas.NflPassingLeadersResponse)
+def read_nfl_passing_leaders(
+    season: str = Query("2024", description="Season as a 4-digit year string"),
+    db: Session = Depends(get_db)
+):
+    leaders_data = nfl_crud.get_nfl_passing_leaders(db, season=season)
+    formatted_leaders = [
+        nfl_schemas.NflPassingLeader(
+            player=leader[0],  # First element is the NflPlayer object
+            total_passing_yards=int(leader[1]),  # Convert float to int
+            total_passing_tds=int(leader[2]),
+            total_attempts=int(leader[3]),
+            total_completions=int(leader[4]),
+            total_interceptions=int(leader[5]),
+            games_played=int(leader[6])
+        )
+        for leader in leaders_data
+    ]
+    return {"leaders": formatted_leaders} 

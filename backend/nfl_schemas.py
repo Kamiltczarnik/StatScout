@@ -152,4 +152,16 @@ class NflScheduleResponse(BaseModel):
     games: List[NflGame]
 
     class Config:
-        from_attributes = True 
+        from_attributes = True
+
+class NflPassingLeader(BaseModel):
+    player: NflPlayer
+    total_passing_yards: int
+    total_passing_tds: int
+    total_attempts: int
+    total_completions: int
+    total_interceptions: int
+    games_played: int
+
+class NflPassingLeadersResponse(BaseModel):
+    leaders: List[NflPassingLeader] 
