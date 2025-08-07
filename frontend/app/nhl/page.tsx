@@ -1,11 +1,17 @@
-import Link from "next/link"
-import Image from "next/image"
-import { HopIcon as Hockey, Calendar, Trophy, Users, TrendingUp } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import {
+  HopIcon as Hockey,
+  Calendar,
+  Trophy,
+  Users,
+  TrendingUp,
+} from "lucide-react";
 import { GiBasketballBasket } from "react-icons/gi";
 import { GiHockey } from "react-icons/gi";
-import { PiFootballHelmetLight } from "react-icons/pi";
+import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { IoBaseballOutline } from "react-icons/io5";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
@@ -20,16 +26,24 @@ export default function HomePage() {
             <Link href="/" className="text-sm font-medium text-primary">
               Home
             </Link>
-            <Link href="/nhl/teams" className="text-sm font-medium text-muted-foreground hover:text-primary">
+            <Link
+              href="/nhl/teams"
+              className="text-sm font-medium text-muted-foreground hover:text-primary">
               Teams
             </Link>
-            <Link href="/nhl/players" className="text-sm font-medium text-muted-foreground hover:text-primary">
+            <Link
+              href="/nhl/players"
+              className="text-sm font-medium text-muted-foreground hover:text-primary">
               Players
             </Link>
-            <Link href="/nhl/schedule" className="text-sm font-medium text-muted-foreground hover:text-primary">
+            <Link
+              href="/nhl/schedule"
+              className="text-sm font-medium text-muted-foreground hover:text-primary">
               Schedule
             </Link>
-            <Link href="/nhl/scout-picks" className="text-sm font-medium text-muted-foreground hover:text-primary">
+            <Link
+              href="/nhl/scout-picks"
+              className="text-sm font-medium text-muted-foreground hover:text-primary">
               Scout Picks
             </Link>
           </nav>
@@ -49,8 +63,8 @@ export default function HomePage() {
                   Your Ultimate NHL Stats & Analytics Hub
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Track your favorite teams and players, analyze game statistics, and stay up-to-date with the latest
-                  NHL action.
+                  Track your favorite teams and players, analyze game
+                  statistics, and stay up-to-date with the latest NHL action.
                 </p>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button asChild size="lg">
@@ -77,7 +91,9 @@ export default function HomePage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Features</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Features
+                </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Everything you need to stay connected with the NHL
                 </p>
@@ -87,22 +103,30 @@ export default function HomePage() {
               <div className="grid gap-1 text-center">
                 <Trophy className="h-10 w-10 mx-auto text-primary" />
                 <h3 className="text-xl font-bold">Team Rankings</h3>
-                <p className="text-sm text-muted-foreground">Up-to-date standings for all NHL teams</p>
+                <p className="text-sm text-muted-foreground">
+                  Up-to-date standings for all NHL teams
+                </p>
               </div>
               <div className="grid gap-1 text-center">
                 <Users className="h-10 w-10 mx-auto text-primary" />
                 <h3 className="text-xl font-bold">Player Profiles</h3>
-                <p className="text-sm text-muted-foreground">Detailed profiles for every NHL player</p>
+                <p className="text-sm text-muted-foreground">
+                  Detailed profiles for every NHL player
+                </p>
               </div>
               <div className="grid gap-1 text-center">
                 <Calendar className="h-10 w-10 mx-auto text-primary" />
                 <h3 className="text-xl font-bold">Game Schedule</h3>
-                <p className="text-sm text-muted-foreground">Complete NHL schedule with game times</p>
+                <p className="text-sm text-muted-foreground">
+                  Complete NHL schedule with game times
+                </p>
               </div>
               <div className="grid gap-1 text-center">
                 <TrendingUp className="h-10 w-10 mx-auto text-primary" />
                 <h3 className="text-xl font-bold">Scout Picks</h3>
-                <p className="text-sm text-muted-foreground">Data-driven game predictions</p>
+                <p className="text-sm text-muted-foreground">
+                  Data-driven game predictions
+                </p>
               </div>
             </div>
           </div>
@@ -115,8 +139,9 @@ export default function HomePage() {
                   Get the edge with our Scout Picks
                 </h2>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed">
-                  Our data-driven algorithm analyzes team travel fatigue to identify games where the home team has an
-                  advantage. Make smarter picks with StatScout.
+                  Our data-driven algorithm analyzes team travel fatigue to
+                  identify games where the home team has an advantage. Make
+                  smarter picks with StatScout.
                 </p>
                 <Button asChild>
                   <Link href="/nhl/scout-picks">View Scout Picks</Link>
@@ -141,27 +166,54 @@ export default function HomePage() {
               <Hockey className="h-6 w-6 text-primary" />
               <span className="text-xl font-bold">StatScout</span>
             </div>
-            <p className="text-sm text-muted-foreground">Your all-in-one sports statistics and analytics platform</p>
+            <p className="text-sm text-muted-foreground">
+              Your all-in-one sports statistics and analytics platform
+            </p>
           </div>
           <div className="md:ml-auto grid gap-8 sm:grid-cols-3">
             <div className="grid gap-3 text-sm">
               <h3 className="font-semibold">Platform</h3>
               <nav className="grid gap-3">
-                <Link href="/nhl" className="flex items-center gap-2 hover:underline">
-                  <span className="inline-block align-middle leading-none">NHL</span>
+                <Link
+                  href="/nhl"
+                  className="flex items-center gap-2 hover:underline">
+                  <span className="inline-block align-middle leading-none">
+                    NHL
+                  </span>
                   <GiHockey size={20} className="text-black align-middle" />
                 </Link>
-                <Link href="/nba" className="flex items-center gap-2 hover:underline">
-                  <span className="inline-block align-middle leading-none">NBA</span>
-                  <GiBasketballBasket size={20} className="text-black align-middle" />
+                <Link
+                  href="/nba"
+                  className="flex items-center gap-2 hover:underline">
+                  <span className="inline-block align-middle leading-none">
+                    NBA
+                  </span>
+                  <GiBasketballBasket
+                    size={20}
+                    className="text-black align-middle"
+                  />
                 </Link>
-                <Link href="/nfl" className="flex items-center gap-2 hover:underline">
-                  <span className="inline-block align-middle leading-none">NFL</span>
-                  <PiFootballHelmetLight size={20} className="text-black align-middle" />
+                <Link
+                  href="/nfl"
+                  className="flex items-center gap-2 hover:underline">
+                  <span className="inline-block align-middle leading-none">
+                    NFL
+                  </span>
+                  <GiAmericanFootballHelmet
+                    size={20}
+                    className="text-black align-middle"
+                  />
                 </Link>
-                <Link href="/mlb" className="flex items-center gap-2 hover:underline">
-                  <span className="inline-block align-middle leading-none">MLB</span>
-                  <IoBaseballOutline size={20} className="text-black align-middle" />
+                <Link
+                  href="/mlb"
+                  className="flex items-center gap-2 hover:underline">
+                  <span className="inline-block align-middle leading-none">
+                    MLB
+                  </span>
+                  <IoBaseballOutline
+                    size={20}
+                    className="text-black align-middle"
+                  />
                 </Link>
               </nav>
             </div>
@@ -173,8 +225,7 @@ export default function HomePage() {
                   href="https://github.com/Kamiltczarnik/StatScout"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-blue-500 hover:underline"
-                >
+                  className="inline-block text-blue-500 hover:underline">
                   <i className="fab fa-github mr-2"></i>
                   Source Code
                 </a>
@@ -182,15 +233,13 @@ export default function HomePage() {
                   href="https://www.linkedin.com/in/kamil-czarnik-269492242/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-blue-500 hover:underline"
-                >
+                  className="inline-block text-blue-500 hover:underline">
                   <i className="fab fa-linkedin mr-2"></i>
                   LinkedIn
                 </a>
                 <a
                   href="https://kamiltczarnik.com/"
-                  className="inline-block text-blue-500 hover:underline"
-                >
+                  className="inline-block text-blue-500 hover:underline">
                   Kamiltczarnik.com
                 </a>
               </nav>
@@ -202,6 +251,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
-

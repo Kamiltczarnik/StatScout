@@ -9,7 +9,7 @@ import {
 } from "lucide-react"; // Consider replacing Hockey with a more generic or NFL-specific icon
 import { GiBasketballBasket } from "react-icons/gi";
 import { GiHockey } from "react-icons/gi";
-import { PiFootballHelmetLight } from "react-icons/pi";
+import { GiAmericanFootballHelmet } from "react-icons/gi";
 import { IoBaseballOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 
@@ -21,7 +21,7 @@ export default function NflHomePage() {
         <div className="container flex h-16 items-center justify-between py-4">
           <div className="flex items-center gap-2">
             {/* Using PiFootballHelmetLight for NFL icon */}
-            <PiFootballHelmetLight className="h-6 w-6 text-primary" />
+            <GiAmericanFootballHelmet className="h-6 w-6 text-primary" />
             <span className="text-xl font-bold">StatScout - NFL</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
@@ -172,7 +172,7 @@ export default function NflHomePage() {
           <div className="flex flex-col gap-2 md:gap-4 lg:gap-6">
             <div className="flex items-center gap-2">
               {/* Using PiFootballHelmetLight for NFL icon in footer */}
-              <PiFootballHelmetLight className="h-6 w-6 text-primary" />
+              <GiAmericanFootballHelmet className="h-6 w-6 text-primary" />
               <span className="text-xl font-bold">StatScout</span>
             </div>
             <p className="text-sm text-muted-foreground">
@@ -208,7 +208,7 @@ export default function NflHomePage() {
                   <span className="inline-block align-middle leading-none">
                     NFL
                   </span>
-                  <PiFootballHelmetLight
+                  <GiAmericanFootballHelmet
                     size={20}
                     className="text-black align-middle"
                   />
